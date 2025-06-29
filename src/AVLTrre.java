@@ -59,29 +59,62 @@ public class AVLTrre {
        //caso Izquierda - Izquierda
        if (balance > 1 && value < node.getLeft().getValue()) {
            System.out.println("Rotacion Derecha");
+           return rightRotate(node);
        }
 
        //caso derecha derecha
        if (balance < -1 && value > node.getRight().getValue()) {
            System.out.println("Rotacion Izquierda");
+           return leftRotate(node);
        }
 
        //Caso Izquierda - Derecha
         if ((balance > 1 && value > node.getLeft().getValue()) ) {
             System.out.println("Cambio");
             System.out.println("Rotacion Izquierda derecha");
+            return rightRotate(node);
        }
 
        // Caso Derecha - Izquierda
      if (balance < -1 && value < node.getRight().getValue()) {
          System.out.println("Cambio");
         System.out.println("Rotación Derecha-Izquierda");
+        return leftRotate(node);
     }   
 
 
        return node;
     }
 
+    private Node rightRotate(Node padre) {
+    Node hijoIzq = padre.getLeft();
+    Node temp = hijoIzq.getRight();
+
+
+    hijoIzq.setRight(padre);
+    padre.setLeft(temp);
+
+
+    padre.setHeight(Math.max(height(padre.getLeft()), height(padre.getRight())) + 1);
+    hijoIzq.setHeight(Math.max(height(hijoIzq.getLeft()), height(hijoIzq.getRight())) + 1);
+
+
+    return hijoIzq;
+}
+
+private Node leftRotate(Node padre) {
+    Node hijoDer = padre.getRight();
+    Node temp = hijoDer.getLeft();
+
+    hijoDer.setLeft(padre);
+    padre.setRight(temp);
+
+  
+    padre.setHeight(Math.max(height(padre.getLeft()), height(padre.getRight())) + 1);
+    hijoDer.setHeight(Math.max(height(hijoDer.getLeft()), height(hijoDer.getRight())) + 1);
+
+    return hijoDer;
+}
 
 
 }
